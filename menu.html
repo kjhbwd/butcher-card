@@ -1,1 +1,43 @@
-
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>감성고기 메뉴판</title>
+    <style>
+        body { margin: 0; padding: 15px; background-color: #ffffff; font-family: 'Pretendard', sans-serif; }
+        .grid-container { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; max-width: 350px; margin: 0 auto; }
+        .product-card { background: #fff; border-radius: 18px; overflow: hidden; border: 1px solid #eee; transition: 0.2s; }
+        .product-card:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
+        .img-box { background: #f0f0f0; height: 110px; display: flex; align-items: center; justify-content: center; color: #aaa; font-size: 11px; font-weight: bold; text-align: center; line-height: 1.4; }
+        .info { padding: 12px; }
+        .tag { color: #ff4d4d; font-size: 10px; font-weight: 800; text-transform: uppercase; }
+        .p-name { display: block; font-size: 15px; font-weight: 700; margin: 4px 0; color: #111; }
+        .p-price { font-size: 13px; color: #666; }
+        .p-price b { color: #000; font-size: 14px; }
+        .btn { display: block; width: 100%; padding: 10px 0; background: #111; color: #fff; text-align: center; text-decoration: none; font-size: 12px; font-weight: bold; margin-top: 10px; border-radius: 10px; }
+    </style>
+</head>
+<body>
+    <div class="grid-container">
+        <div class="product-card">
+            <div class="img-box">📸 사장님 전용<br>고기 사진 자리</div>
+            <div class="info">
+                <span class="tag">BEST</span>
+                <span class="p-name">한우 육회 세트</span>
+                <span class="p-price">200g / <b>19,000원</b></span>
+                <a href="#" class="btn">주문하기</a>
+            </div>
+        </div>
+        <div class="product-card">
+            <div class="img-box">📸 마블링 확인용<br>실사 사진 자리</div>
+            <div class="info">
+                <span class="tag">HIT</span>
+                <span class="p-name">벌집 삼겹살</span>
+                <span class="p-price">500g / <b>14,500원</b></span>
+                <a href="#" class="btn">주문하기</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
