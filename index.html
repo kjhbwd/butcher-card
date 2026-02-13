@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>정육점 프리미엄 명함</title>
+    <style>
+        body { margin: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; background-color: #f0f0f0; font-family: 'Pretendard', sans-serif; }
+        .card { width: 340px; background: #000; color: #fff; padding: 30px; border-radius: 25px; box-shadow: 0 20px 40px rgba(0,0,0,0.3); border: 1px solid #333; }
+        .header { color: #4ade80; font-size: 14px; font-weight: bold; margin-bottom: 25px; display: flex; align-items: center; }
+        .dot { width: 8px; height: 8px; background: #4ade80; border-radius: 50%; margin-right: 8px; animation: blink 1s infinite; }
+        .title { font-size: 22px; margin-bottom: 20px; font-weight: 800; line-height: 1.4; }
+        .price-row { display: flex; justify-content: space-between; padding: 15px 0; border-bottom: 1px solid #222; font-size: 16px; }
+        .price { color: #ffd700; font-weight: bold; }
+        .notice { margin-top: 25px; font-size: 12px; color: #aaa; background: #111; padding: 15px; border-radius: 12px; line-height: 1.6; }
+        .cta-button { display: block; margin-top: 25px; background: #fff; color: #000; text-decoration: none; text-align: center; padding: 18px; border-radius: 15px; font-weight: bold; font-size: 16px; transition: 0.3s; }
+        .cta-button:hover { background: #ffd700; transform: translateY(-2px); }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="header"><div class="dot"></div> LIVE: 실시간 산지 직송 시세</div>
+        <div class="title">정직한 청년들이 썰어내는<br>최고급 한우/한돈</div>
+        <div class="price-row"><span>🐂 1++ 한우 등심 (100g)</span><span class="price">15,800원</span></div>
+        <div class="price-row"><span>🐖 한돈 삼겹살 (100g)</span><span class="price">2,900원</span></div>
+        <div class="notice">🚛 <b>전국 택배 발송 가능</b><br>오후 2시 이전 주문 시 당일 신선 배송 시작!</div>
+        <a href="https://open.kakao.com/o/gCfTx9di" class="cta-button">카톡으로 바로 주문하기</a>
+    </div>
+</body>
+</html>
