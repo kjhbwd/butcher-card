@@ -3,92 +3,117 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>감성고기 프리미엄 메뉴판</title>
+    <title>감성고기 사진 메뉴판</title>
     <style>
-        /* 모바일 최적화 및 가로 스크롤 설정 */
-        body { margin: 0; padding: 15px; background-color: #ffffff; font-family: 'Pretendard', sans-serif; overflow-x: hidden; }
-        .menu-wrapper { 
-            display: flex; 
-            overflow-x: auto; 
-            gap: 12px; 
-            padding-bottom: 15px; 
-            -webkit-overflow-scrolling: touch; /* 아이폰 부드러운 스크롤 */
+        /* 1. 기본 레이아웃 및 중앙 정렬 */
+        body { 
+            margin: 0; padding: 20px 10px; background: transparent; font-family: 'Pretendard', sans-serif; 
+            display: flex; justify-content: center; 
         }
-        /* 스크롤바 디자인 */
-        .menu-wrapper::-webkit-scrollbar { height: 4px; }
-        .menu-wrapper::-webkit-scrollbar-thumb { background: #eee; border-radius: 10px; }
-
         .grid-container { 
-            display: grid; 
-            grid-template-columns: repeat(3, 110px); /* 3열 고정 */
-            grid-template-rows: repeat(3, auto); /* 총 9개 상품 (3행) */
-            gap: 12px; 
+            display: grid; grid-template-columns: repeat(3, 105px); gap: 10px; 
+            justify-content: center; max-width: 340px; 
         }
 
+        /* 2. 상품 카드 디자인 */
         .product-card { 
-            width: 110px; 
-            background: #fff; 
-            border-radius: 12px; 
-            overflow: hidden; 
-            border: 1px solid #f0f0f0; 
-            display: flex;
-            flex-direction: column;
+            background: #fff; border-radius: 12px; overflow: hidden; 
+            border: 1px solid #eee; display: flex; flex-direction: column; 
+            align-items: center; text-align: center; 
         }
 
-        .img-box { background: #f8f8f8; height: 80px; display: flex; align-items: center; justify-content: center; color: #ccc; font-size: 10px; text-align: center; }
-        
-        .info { padding: 8px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
-        .tag { color: #ff4d4d; font-size: 8px; font-weight: 800; }
-        .p-name { display: block; font-size: 11px; font-weight: 700; margin: 2px 0; color: #111; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .p-price { font-size: 10px; color: #666; }
+        /* 3. [중요] 이미지 영역 디자인 */
+        .img-box { 
+            width: 100%; height: 85px; overflow: hidden; cursor: pointer; position: relative;
+        }
+        .img-box img {
+            width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s;
+        }
+        .img-box:hover img { transform: scale(1.05); /* 마우스 올리면 살짝 커짐 */ }
+        .img-box::after {
+            content: '🔍'; position: absolute; bottom: 5px; right: 5px; font-size: 12px; 
+            background: rgba(255,255,255,0.7); padding: 2px 5px; border-radius: 10px;
+        }
+
+        /* 4. 정보 및 버튼 디자인 */
+        .info { padding: 8px; width: 100%; box-sizing: border-box; }
+        .tag { color: #ff4d4d; font-size: 8px; font-weight: 800; display: block; margin-bottom: 2px; }
+        .p-name { display: block; font-size: 11px; font-weight: 700; color: #111; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .p-price b { color: #000; font-size: 11px; }
-
         .btn { 
-            display: block; 
-            width: 100%; 
-            padding: 6px 0; 
-            background: #111; 
-            color: #fff; 
-            text-align: center; 
-            text-decoration: none; 
-            font-size: 10px; 
-            font-weight: bold; 
-            margin-top: 8px; 
-            border-radius: 6px; 
+            display: block; width: 90%; margin: 5px auto 0; padding: 6px 0; 
+            background: #111; color: #fff; text-align: center; text-decoration: none; 
+            font-size: 10px; font-weight: bold; border-radius: 6px; 
         }
+
+        /* 5. [핵심기능] 사진 확대 모달창 (평소엔 숨김) */
+        .modal {
+            display: none; position: fixed; z-index: 9999; 
+            left: 0; top: 0; width: 100%; height: 100%; overflow: hidden; 
+            background-color: rgba(0,0,0,0.85); /* 어두운 배경 */
+            align-items: center; justify-content: center;
+            backdrop-filter: blur(5px); /* 배경 블러 효과 */
+        }
+        .modal-content {
+            max-width: 90%; max-height: 85%; border-radius: 12px; 
+            box-shadow: 0 0 20px rgba(255,255,255,0.2); animation: zoom 0.3s;
+        }
+        .close-btn {
+            position: absolute; top: 15px; right: 25px; color: #f1f1f1; 
+            font-size: 35px; font-weight: bold; cursor: pointer; z-index: 10000;
+        }
+        @keyframes zoom { from {transform:scale(0.8); opacity:0} to {transform:scale(1); opacity:1} }
     </style>
 </head>
 <body>
-    <div class="menu-wrapper">
-        <div class="grid-container">
-            <div class="product-card">
-                <div class="img-box">🥩</div>
-                <div class="info">
-                    <span class="tag">BEST</span>
-                    <span class="p-name">한우 등심</span>
-                    <span class="p-price"><b>15,800원</b></span>
-                    <a href="#" class="btn">담기</a>
-                </div>
+    <div class="grid-container">
+        <div class="product-card">
+            <div class="img-box" onclick="openModal(this)">
+                <img src="https://placehold.co/400x300/png?text=한우+마블링+실사1" alt="한우 등심">
             </div>
-            <div class="product-card">
-                <div class="img-box">🐖</div>
-                <div class="info">
-                    <span class="tag">HOT</span>
-                    <span class="p-name">삼겹살</span>
-                    <span class="p-price"><b>2,900원</b></span>
-                    <a href="#" class="btn">담기</a>
-                </div>
+            <div class="info"><span class="tag">BEST</span><span class="p-name">한우 1++ 등심</span><span class="p-price"><b>15,800원</b></span><a href="#" class="btn">담기</a></div>
+        </div>
+        <div class="product-card">
+            <div class="img-box" onclick="openModal(this)">
+                <img src="https://placehold.co/400x300/png?text=삼겹살+실사2" alt="삼겹살">
             </div>
-            <div class="product-card">
-                <div class="img-box">🐂</div>
-                <div class="info">
-                    <span class="tag">추천</span>
-                    <span class="p-name">치마살</span>
-                    <span class="p-price"><b>18,000원</b></span>
-                    <a href="#" class="btn">담기</a>
-                </div>
+            <div class="info"><span class="tag">HOT</span><span class="p-name">황금 삼겹살</span><span class="p-price"><b>2,900원</b></span><a href="#" class="btn">담기</a></div>
+        </div>
+         <div class="product-card">
+            <div class="img-box" onclick="openModal(this)">
+                <img src="https://placehold.co/400x300/png?text=치마살+실사3" alt="치마살">
             </div>
-            </div>
+            <div class="info"><span class="tag">추천</span><span class="p-name">특수부위 치마살</span><span class="p-price"><b>18,000원</b></span><a href="#" class="btn">담기</a></div>
+        </div>
+        <div class="product-card"><div class="img-box" onclick="openModal(this)"><img src="https://placehold.co/400x300/png?text=고기사진4"></div><div class="info"><span class="p-name">갈비살</span><a href="#" class="btn">담기</a></div></div>
+         <div class="product-card"><div class="img-box" onclick="openModal(this)"><img src="https://placehold.co/400x300/png?text=고기사진5"></div><div class="info"><span class="p-name">항정살</span><a href="#" class="btn">담기</a></div></div>
+         <div class="product-card"><div class="img-box" onclick="openModal(this)"><img src="https://placehold.co/400x300/png?text=고기사진6"></div><div class="info"><span class="p-name">목살</span><a href="#" class="btn">담기</a></div></div>
+         <div class="product-card"><div class="img-box" onclick="openModal(this)"><img src="https://placehold.co/400x300/png?text=고기사진7"></div><div class="info"><span class="p-name">사태</span><a href="#" class="btn">담기</a></div></div>
+         <div class="product-card"><div class="img-box" onclick="openModal(this)"><img src="https://placehold.co/400x300/png?text=고기사진8"></div><div class="info"><span class="p-name">안심</span><a href="#" class="btn">담기</a></div></div>
+         <div class="product-card"><div class="img-box" onclick="openModal(this)"><img src="https://placehold.co/400x300/png?text=고기사진9"></div><div class="info"><span class="p-name">모듬세트</span><a href="#" class="btn">담기</a></div></div>
     </div>
+
+    <div id="imgModal" class="modal" onclick="closeModal()">
+        <span class="close-btn">&times;</span>
+        <img class="modal-content" id="enlargedImg">
+    </div>
+
+    <script>
+        const modal = document.getElementById("imgModal");
+        const modalImg = document.getElementById("enlargedImg");
+
+        function openModal(element) {
+            const img = element.querySelector('img');
+            modal.style.display = "flex";
+            modalImg.src = img.src;
+        }
+
+        function closeModal() {
+            modal.style.display = "none";
+        }
+        
+        // 사진 자체를 클릭했을 때는 닫히지 않게 방지
+        modalImg.onclick = function(e) { e.stopPropagation(); }
+    </script>
 </body>
 </html>
